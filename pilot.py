@@ -1,104 +1,51 @@
-import numpy as np 
-import matplotlib.pyplot as plt 
-import math
-'''
-Y = [y1,y2,...yn]
-yi(x) : R -> R
-Y : R -> R^n
-Y' = f(x,Y)
-f : R^(n + 1) -> R^n
-Y(x0) = Y0
-'''
+import sympy as sp
 
+# Define symbolic variables
+w, a, b, c, A, p, t, k1, k2 = sp.symbols('w a b c A p t k1 k2')
 
-'''
-Functions 
-'''
-def f1(x,Y):
-    return math.sin(Y[1])
-def f2(x,Y):
-    return math.cos(-200*Y[0] - 102*Y[1])
-def f(x,Y):
-    return np.array([f1(x,Y),f2(x,Y)])
-epsilon = 1e-8
+# Define the function y(w)
+y_w = -(a * A * t**2 * sp.sin(p + t * w)) / (a**2 * t**4 - 2 * a * c * t**2 + b**2 * t**2+ c**2) + \
+      (A * c * sp.sin(p + t * w)) / (a**2 * t**4 - 2 * a * c * t**2 + b**2 * t**2 + c**2) - \
+      (A * b * t * sp.cos(p + t * w)) / (a**2 * t**4 - 2 * a * c * t**2 + b**2 * t**2 + c**2) + \
+      k1 * sp.exp(0.5 * w * (-sp.sqrt(b**2 - 4 * a * c)/a - b/a)) + \
+      k2 * sp.exp(0.5 * w * (sp.sqrt(b**2 - 4 * a * c)/a - b/a))
 
-def Del(g,Y,i):
-    # del g/del yi
-    g1 = g(Y)
-    Y[i] += epsilon
-    g2 = g(Y)
-    return (g2 - g1)/epsilon
+# Evaluate y(w) with given values of variables
+values = {a: 1, b: 1, c: 1, A: 1, w: 2*p}
+result = y_w.subs(values)
+print("y(w) =", result)
+import numpy as np
+import matplotlib.pyplot as plt
 
-def F(Y,x_n,Y_n,h):
-    return Y_n + h/2 * (f(x_n + h,Y) + f(x_n,Y_n)) - Y
+# Define the function
+def y(t, k1, k2, p):
+    numerator_1 = k1 * np.exp(p * (-1 - np.sqrt(3) * 1j))
+    numerator_2 = k2 * np.exp(p * (-1 + np.sqrt(3) * 1j))
+    denominator = t**4 - t**2 + 1
+    term_1 = numerator_1
+    term_2 = numerator_2
+    term_3 = t**2 * np.sin(2 * p * t + p) / denominator
+    term_4 = t * np.cos(2 * p * t + p) / denominator
+    term_5 = np.sin(2 * p * t + p) / denominator
+    return term_1 + term_2 - term_3 - term_4 + term_5
 
-def newtonRapson(Y_n,x_n,h):
-    Y_k = Y_n
-    J_k = np.zeros((N,N))
-    # J_k
-    # J_k[i,j] = del Fi / del yj
-    tolerance = 1e-6
-    error = 1
-    iterations = 10000
-    # print("starting Newton Rapson")
-    while(iterations and error > tolerance):
-        for i in range(N):
-            for j in range(N):
-                def Fi(Y_):
-                    return F(Y_,x_n,Y_n,h)[i]
-                J_k[i,j] = Del(Fi,Y_k,j)
-        # print(" J = \n",J_k)
-        # print(" y* => ",Y_k)
-        Y_k = Y_k - np.linalg.inv(J_k)@F(Y_k,x_n,Y_n,h)
-        iterations -= 1
-        error = np.linalg.norm(F(Y_k,x_n,Y_n,h))
-    return Y_k
-def eqSolver(x0,x1,numPoints,Y0,N):
-    h = (x1 - x0)/numPoints
-    Y_n = Y0
-    x_n = x0
-    '''
-    Y_(n + 1) = Y_(n) + h/2*(f(x_n + h,Y_(n + 1)) + f(x_n,Y_n))
-    '''
-    Output = np.zeros((N,numPoints + 1))
-    for i in range(N):
-        Output[i][0] = Y_n[i]
-    
-    print(Y_n)
-    for n in range(1,numPoints + 1):
-        '''
-        Y_(n + 1) = Y_(n) + h/2*(f(x_n + h,Y_(n + 1)) + f(x_n,Y_n))
-        Now we have to solve Y_(n + 1) [vector of size Nx1]
-        Newton-Rapson
-        F(Y_(n + 1)) = Y_(n) + h/2*(f(x_n + h,Y_(n + 1)) + f(x_n,Y_n)) - Y_(n + 1) 
-        Find Y_(n + 1) = [y1,y2,...yN] s.t
-        F(Y_(n + 1)) = 0
-        '''
-        # print("Y = ",Y_n)
-        Y_n = newtonRapson(Y_n,x_n,h)
-        x_n += h
-        for i in range(N):
-            Output[i][n] = Y_n[i]
+# Generate values for t
+t_values = np.linspace(-10, 10, 1000)
 
-    return Output
-N = 2;'''Number of Functions'''
-x0,x1 = 0,10
-Y0 = np.array([1.0,-2.0])
+# Set values for k1, k2, and p
+k1 = 1
+k2 = 2
+p = np.pi  # using pi in place of p
 
-numPoints = 10000
-x_array = np.linspace(x0,x1,numPoints + 1)
-y_array = eqSolver(x0,x1,numPoints,Y0,N)
+# Calculate y values
+y_values = y(t_values, k1, k2, p)
 
-
-
-plt.figure(figsize=(8, 6))
-for i in range(N):
-    plt.plot(x_array, y_array[i], label=f'y_{i}(x)')
-plt.xlabel('x')
+# Plot the function
+plt.figure(figsize=(10, 6))
+plt.plot(t_values, y_values, label='y(t)', color='blue')
+plt.title('Plot of y(t)')
+plt.xlabel('t')
 plt.ylabel('y')
-plt.legend()
 plt.grid(True)
-plt.savefig('save.png')
+plt.legend()
 plt.show()
-
-# testing a commit
