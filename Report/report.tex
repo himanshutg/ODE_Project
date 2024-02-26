@@ -2,6 +2,8 @@
 \usepackage[margin=0.5in]{geometry}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
 \usepackage{graphicx} % Required for inserting images
 
 \title{Numerical Solution of ODEs using Trapezoidal Rule and Newton-Raphson}
@@ -298,4 +300,125 @@ We will look at few cases of $f(t)$\\
     $c_1 = -0.18126892549017007$\\
     $c_2 = 0.004133492238317597$\\
 \end{enumerate}
+
+\section{Solving for Square wave function}
+
+The objective is to solve the differential equation
+\[ ax'' + bx' + cx = f(t) \]
+where \( f(t) \) is a square wave function defined as follows:
+
+\[
+f(t) =
+\begin{cases}
+1 & \text{if } 0 \leq t < p \\
+0 & \text{if } p \leq t < 1
+\end{cases}
+\]
+
+This function is periodic with period \( T = 1 \).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% Axis
+\draw[->] (-0.5,0) -- (6,0) node[right] {\( t \)};
+\draw[->] (0,-0.5) -- (0,1.5) node[above] {\( f(t) \)};
+% Function
+\draw[thick] (0,1) -- (2,1) -- (2,0) -- (4,0) -- (4,1) -- (6,1);
+% Period markings
+\draw[dashed] (2,0) -- (2,-0.2) node[below] {\( p \)};
+\draw[dashed] (4,0) -- (4,-0.2) node[below] {1};
+\end{tikzpicture}
+\caption{Square wave function \( f(t) \) with period \( T=1 \) and amplitude \( A=1 \)}
+\label{fig:square_wave}
+\end{figure}
+
+We have the following initial conditions for the differential equation:
+\[ x(0) = 0 \]
+\[ x'(0) = 0 \]
+
+We convert the square wave to its Fourier transform, which is equal to:
+
+\[
+p + \sum_{n=1}^{\infty} \left( A_n \cos(2\pi n t) + B_n \sin(2\pi n t) \right)
+\]
+
+where \( A_n \) and \( B_n \) are the Fourier coefficients, and \( p \) is the average value of the function.
+\(A_n\) and \(B_n\) are given by the following equations:
+
+\[A_n = \frac{2}{T} \int_{0}^{T} f(t) \cos(2\pi n t) \, dt = \frac{sin(2 \pi n p)}{\pi n}\]
+\[B_n = \frac{2}{T} \int_{0}^{T} f(t) \sin(2\pi n t) \, dt = \frac{1 - \cos(2 \pi n p)}{\pi n}= \frac{2 sin^2(\pi n p)}{\pi n}\]
+
+We approximate this by the truncated Fourier series:
+
+\[
+f_N(t) = p + \sum_{n=1}^{N} \left( A_n \cos(2\pi n t) + B_n \sin(2\pi n t) \right)
+\]
+
+where \( N \) is the number of terms used in the approximation.
+
+The equation to solve is:
+
+\[
+ax'' + bx' + cx = f_N(t)
+\]
+
+with initial conditions:
+
+\[
+x_N(0) = 0, \quad x'_N(0) = 0
+\]
+
+where \( f_N(t) \) is the truncated Fourier series of \( f(t) \) with \( N \) terms,
+and \( x_N(t) \) is the solution to the differential equation with \( f_N(t) \).
+
+We have the equation:
+\begin{equation}
+x_N(t) = x_{N,\text{particular}}(t) + x_{N,\text{homogeneous}}(t)
+\end{equation}
+
+Now, let's consider the homogeneous solution \(x_{N,\text{homogeneous}}(t)\). 
+
+The homogeneous equation is given by:
+\[
+ax'' + bx' + cx = 0
+\]
+
+Consider the solution space of this equation. Let \(x_1(t)\) and \(x_2(t)\) be solutions. Then \(x_1(t) - x_2(t)\) is a solution of the homogeneous equation.
+
+To find solutions of the homogeneous equation, we consider the characteristic equation:
+\[
+a k^2 + b k + c = 0
+\]
+
+Depending on the roots of this equation, the solutions of the homogeneous equation vary:
+\begin{enumerate}
+    \item If both roots are real and distinct (\( \alpha \) and \( \beta \)), then \( e^{\alpha t} \) and \( e^{\beta t} \) are solutions.
+    \item If both roots are real and equal (\( r \)), then \( e^{rt} \) and \( t e^{rt} \) are solutions.
+    \item If the roots are complex (\( \alpha \pm i \beta \)), then \( e^{\alpha t} \sin(\beta t) \) and \( e^{\alpha t} \cos(\beta t) \) are solutions.
+\end{enumerate}
+
+These solutions form a vector space with dimension 2, and the basis vectors (solutions) depend on the values of \(a\), \(b\), and \(c\).
+
+Now, we have to solve for \(x_{N,\text{particular}}(t)\), also called the particular solution of \(x_N\).
+
+In the context of our problem, the particular solution \( x_{N,\text{particular}} \) is expressed as the sum of the constant term \( \tilde{x}_0 \) and a series of terms \( \tilde{x}_n \) for \( n = 1, 2, \ldots, N \), representing the contribution of each Fourier component:
+\[ x_{N,\text{particular}} = \tilde{x}_0 + \sum_{n=1}^{N} \tilde{x}_n \]
+
+where \( \widetilde{x}_{N,\text{particular}}(t) \) is the particular solution of \(ax'' + bx' + cx = f_N(t)\), \( \widetilde{x}_0 \) is the particular solution of \(ax''+bx'+cx = p\), and \( \widetilde{x}_n \) is the particular solution of \(ax''+bx'+cx = A_n \cos(2 \pi n t) + B_n \sin(2 \pi n t)\).
+
+Calculating the particular solution of \(ax''+bx'+cx = p\), we have the following cases:
+\begin{itemize}
+    \item If \(c \neq 0\), then
+    \[
+        \widetilde{x}
+        _{0}(t) = \frac{p}{c}
+    \]
+    \item If \(c = 0\), then
+    \[
+        \widetilde{x}
+        _{0}(t) = \frac{p}{b} \cdot t
+    \]
+\end{itemize}
+
 \end{document}
