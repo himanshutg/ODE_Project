@@ -337,7 +337,7 @@ We have the following initial conditions for the differential equation:
 \[ x(0) = 0 \]
 \[ x'(0) = 0 \]
 
-We convert the square wave to its Fourier transform, which is equal to:
+We convert the square wave to its Fourier series, which is equal to:
 
 \[
 p + \sum_{n=1}^{\infty} \left( A_n \cos(2\pi n t) + B_n \sin(2\pi n t) \right)
@@ -402,10 +402,10 @@ These solutions form a vector space with dimension 2, and the basis vectors (sol
 
 Now, we have to solve for \(x_{N,\text{particular}}(t)\), also called the particular solution of \(x_N\).
 
-In the context of our problem, the particular solution \( x_{N,\text{particular}} \) is expressed as the sum of the constant term \( \tilde{x}_0 \) and a series of terms \( \tilde{x}_n \) for \( n = 1, 2, \ldots, N \), representing the contribution of each Fourier component:
+In the context of our problem, the particular solution \( x_{N,\text{particular}} \) is expressed as the sum of \( \tilde{x}_0 \) and a series of terms \( \tilde{x}_n \) for \( n = 1, 2, \ldots, N \).
 \[ x_{N,\text{particular}} = \tilde{x}_0 + \sum_{n=1}^{N} \tilde{x}_n \]
 
-where \( \widetilde{x}_{N,\text{particular}}(t) \) is the particular solution of \(ax'' + bx' + cx = f_N(t)\), \( \widetilde{x}_0 \) is the particular solution of \(ax''+bx'+cx = p\), and \( \widetilde{x}_n \) is the particular solution of \(ax''+bx'+cx = A_n \cos(2 \pi n t) + B_n \sin(2 \pi n t)\).
+where \( {x}_{N,\text{particular}}(t) \) is the particular solution of \(ax'' + bx' + cx = f_N(t)\), \( \widetilde{x}_0 \) is the particular solution of \(ax''+bx'+cx = p\), and \( \widetilde{x}_n \) is the particular solution of \(ax''+bx'+cx = A_n \cos(2 \pi n t) + B_n \sin(2 \pi n t)\).
 
 Calculating the particular solution of \(ax''+bx'+cx = p\), we have the following cases:
 \begin{itemize}
@@ -420,5 +420,37 @@ Calculating the particular solution of \(ax''+bx'+cx = p\), we have the followin
         _{0}(t) = \frac{p}{b} \cdot t
     \]
 \end{itemize}
+Now, Calculating the particular solution of \(ax''+bx'+cx = A_n \cos(2 \pi n t) + B_n \sin(2 \pi n t)\)\\
+$\widetilde{x}_n = \alpha_nsin(2\pi nt) + \beta_n cos(2\pi nt)$
+where
+\[
+\alpha_n = \frac
+{
+\begin{vmatrix}
+B_n & -b\cdot 2\pi n \\
+A_n & c-(2\pi n)^2
+\end{vmatrix}
+}
+{
+\begin{vmatrix}
+c-(2\pi n)^2 & -b\cdot 2\pi n \\
+b\cdot 2\pi n & c-(2\pi n)^2
+\end{vmatrix}   
+} \quad,
+\beta_n = \frac
+{
+\begin{vmatrix}
+c-(2\pi n)^2 & B_n \\
+b\cdot 2\pi n & A_n
+\end{vmatrix}
+}
+{  
+\begin{vmatrix}
+c-(2\pi n)^2 & -b\cdot 2\pi n \\
+b\cdot 2\pi n & c-(2\pi n)^2
+\end{vmatrix}
+}.
+\]
+
 
 \end{document}
