@@ -220,27 +220,27 @@ We will look at few cases of $f(t)$\\
 
     \item $f(t) = A\cdot sin(\omega t) + B\cdot cos(\omega t)$\\
     \begin{itemize}
-        \item $b = 0$ and $c = w^2$\\\\
-        $x_p(t) = -\frac{A t cos(\omega t)}{2\omega} + \frac{B t sin(\omega t)}{2\omega}$\\
+        \item $b = 0$ and $c = a \cdot w^2$\\\\
+        $x_p(t) = -\frac{A t cos(\omega t)}{2 a \omega} + \frac{B t sin(\omega t)}{2 a \omega}$\\
         \item $b \neq 0$ or $c \neq w^2$\\
         $$\alpha = \frac{
             \begin{vmatrix}
         A & -b\omega \\
-        B & c-\omega^{2} \\
+        B & c-a \omega^{2} \\
         \end{vmatrix}}{
             \begin{vmatrix}
-            c-\omega^2 & -b\omega \\
-            b\omega & c-\omega^2 \\
+            c-a \omega^{2} & -b\omega \\
+            b\omega & c-a \omega^{2} \\
              \end{vmatrix}
         }, \quad
         \beta = \frac{
             \begin{vmatrix}
-            c-\omega^2 & A \\
+            c-a \omega^{2} & A \\
             b\omega & B \\
             \end{vmatrix}
         }{\begin{vmatrix}
-            c-\omega^2 & -b\omega \\
-            b\omega & c-\omega^2 \\
+            c-a \omega^{2} & -b\omega \\
+            b\omega & c-a \omega^{2} \\
              \end{vmatrix}
         }$$\\
 

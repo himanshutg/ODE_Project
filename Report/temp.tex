@@ -7,7 +7,7 @@
 \section{Solving for Square wave function}
 
 The objective is to solve the differential equation
-\[ LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = v_p(t) \]
+\[ LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = v_p(t) \]
 where \( v_p(t) \) is a square wave function defined as follows:
 
 \[
@@ -37,8 +37,8 @@ This function is periodic with period \( T_{\text{SW}} \).
 \end{figure}
 
 We have the following initial conditions for the differential equation:
-\[ v_0(0) = 0 \]
-\[ \frac{dv_0}{dt}(0) = 0 \]
+\[ v(0) = 0 \]
+\[ \frac{dv}{dt}(0) = 0 \]
 
 We convert the square wave to its Fourier series, which is equal to:
 
@@ -63,35 +63,28 @@ where \( N \) is the number of terms used in the approximation.
 The equation to solve is:
 
 \[
-LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = v_{p,N}(t)
+LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = v_{p,N}(t)
 \]
 
 with initial conditions:
 
 \[
-v_{0,N}(0) = 0, \quad \frac{dv_{0,N}}{dt}(0) = 0
+v_{N}(0) = 0, \quad \frac{dv_{N}}{dt}(0) = 0
 \]
 
 where \( v_{p,N}(t) \) is the truncated Fourier series of \( v_p(t) \) with \( N \) terms,
-and \( v_{0,N}(t) \) is the solution to the differential equation with \( v_{p,N}(t) \).
+and \( v_{N}(t) \) is the solution to the differential equation with \( v_{p,N}(t) \).
 
 We have the equation:
 \begin{equation}
-v_{0,N}(t) = v_{0,N,\text{particular}}(t) + v_{0,N,\text{homogeneous}}(t)
+v_{N}(t) = v_{N,\text{particular}}(t) + v_{N,\text{homogeneous}}(t)
 \end{equation}
 
-Now, let's consider the homogeneous solution \(v_{0,N,\text{homogeneous}}(t)\). 
+Now, let's consider the homogeneous solution \(v_{N,\text{homogeneous}}(t)\). 
 
 The homogeneous equation is given by:
 \[
-LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = 0
-\]
-
-Consider the solution space of this equation. Let \(v_{01}(t)\) and \(v_{02}(t)\) be solutions. Then \(v_{01}(t) - v_{02}(t)\) is a solution of the homogeneous equation.
-
-To find solutions of the homogeneous equation, we consider the characteristic equation:
-\[
-LC k^2 + \frac{L}{R} k + 1 = 0
+LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = 0
 \]
 
 Depending on the roots of this equation, the solutions of the homogeneous equation vary:
@@ -101,51 +94,43 @@ Depending on the roots of this equation, the solutions of the homogeneous equati
     \item If the roots are complex (\( \alpha \pm i \beta \)), then \( e^{\alpha t} \sin(\beta t) \) and \( e^{\alpha t} \cos(\beta t) \) are solutions.
 \end{enumerate}
 
-These solutions form a vector space with dimension 2, and the basis vectors (solutions) depend on the values of \(LC\), \(L/R\), and \(1\).
 
-Now, we have to solve for \(v_{0,N,\text{particular}}(t)\), also called the particular solution of \(v_{0,N}\).
+In the context of our problem, the particular solution \( v_{N,\text{particular}} \) is expressed as the sum of \( \widetilde{v}_0 \) and a series of terms \( \widetilde{v}_n \) for \( n = 1, 2, \ldots, N \).
+\[ v_{N,\text{particular}} = \widetilde{v}_0 + \sum_{n=1}^{N} \widetilde{v}_n \]
 
-In the context of our problem, the particular solution \( v_{0,N,\text{particular}} \) is expressed as the sum of \( \widetilde{v}_0 \) and a series of terms \( \widetilde{v}_n \) for \( n = 1, 2, \ldots, N \).
-\[ v_{0,N,\text{particular}} = \widetilde{v}_0 + \sum_{n=1}^{N} \widetilde{v}_n \]
+where \( {v}_{N,\text{particular}}(t) \) is the particular solution of \(LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = v_{p,N}(t)\), \( \widetilde{v}_0 \) is the particular solution of \(LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = D \cdot V_{\text{DC}}\), and \( \widetilde{v}_n \) is the particular solution of \(LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = A_n \cos\left(\frac{2 \pi n t}{T_{\text{SW}}}\right) + B_n \sin\left(\frac{2 \pi n t}{T_{\text{SW}}}\right)\).
 
-where \( {v}_{0,N,\text{particular}}(t) \) is the particular solution of \(LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = v_{p,N}(t)\), \( \widetilde{v}_0 \) is the particular solution of \(LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = D \cdot V_{\text{DC}}\), and \( \widetilde{v}_n \) is the particular solution of \(LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = A_n \cos\left(\frac{2 \pi n t}{T_{\text{SW}}}\right) + B_n \sin\left(\frac{2 \pi n t}{T_{\text{SW}}}\right)\).
+Calculating the particular solution of \(LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = D \cdot V_{\text{DC}}\), we have \
+$$\widetilde{v}_{0}(t) = D \cdot V_{\text{DC}}$$
 
-Calculating the particular solution of \(LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = D \cdot V_{\text{DC}}\), we have the following cases:
-\begin{itemize}
-    \item \(LC \neq 0\)
-    \[
-        \widetilde{v}
-        _{0}(t) = D \cdot V_{\text{DC}}
-    \]
-\end{itemize}
-Now, Calculating the particular solution of \(LC \frac{d^2 v_0}{dt^2} + \frac{L}{R} \frac{dv_0}{dt} + v_0 = A_n \cos\left(\frac{2 \pi n t}{T_{\text{SW}}}\right) + B_n \sin\left(\frac{2 \pi n t}{T_{\text{SW}}}\right)\)\\
+Now, Calculating the particular solution of \(LC \frac{d^2 v}{dt^2} + \frac{L}{R} \frac{dv}{dt} + v = A_n \cos\left(\frac{2 \pi n t}{T_{\text{SW}}}\right) + B_n \sin\left(\frac{2 \pi n t}{T_{\text{SW}}}\right)\)\\
 $\widetilde{v}_n = \alpha_n\sin\left(\frac{2\pi nt}{T_{\text{SW}}}\right) + \beta_n \cos\left(\frac{2\pi nt}{T_{\text{SW}}}\right)$
 where
 \[
 \alpha_n = \frac
 {
 \begin{vmatrix}
-B_n & -\frac{L}{R}\cdot 2\pi n \\
-A_n & LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
+B_n & -\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} \\
+A_n & 1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
 \end{vmatrix}
 }
 {
 \begin{vmatrix}
-LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & -\frac{L}{R}\cdot 2\pi n \\
-\frac{L}{R}\cdot 2\pi n & LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
+1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & -\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} \\
+\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} & 1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
 \end{vmatrix}   
 } \quad,
 \beta_n = \frac
 {
 \begin{vmatrix}
-LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & B_n \\
--\frac{L}{R}\cdot 2\pi n & A_n
+1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & B_n \\
+\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} & A_n
 \end{vmatrix}
 }
 {  
 \begin{vmatrix}
-LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & -\frac{L}{R}\cdot 2\pi n \\
-\frac{L}{R}\cdot 2\pi n & LC-\left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
+1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2 & -\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} \\
+\frac{L}{R}\cdot \frac{2\pi n}{T_{\text{SW}}} & 1- L C \left(\frac{2\pi n}{T_{\text{SW}}}\right)^2
 \end{vmatrix}
 }.
 \]
