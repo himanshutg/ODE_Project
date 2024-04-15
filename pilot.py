@@ -1,2 +1,2 @@
-import numpy as np
-print(np.arctan(-2*np.pi/(4*np.pi**2 - 1)))
+import math
+print(math.gcd(1/2, 1/4))

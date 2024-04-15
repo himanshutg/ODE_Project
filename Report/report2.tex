@@ -1,0 +1,91 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{bookmark}
+\usepackage{graphicx}
+
+\usetheme{Warsaw}
+
+\title{Double Fourier Series}
+\author{Kaustubh Dandegaonkar, Himashu Jindal, Shubham Vishwakarma}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+\begin{frame}
+\frametitle{Fourier series in 1-D}
+\begin{itemize}
+    \item A periodic function $f(x)$ with a period of $2\pi$ and for which $\int_{0}^{2\pi} f(x)^2 \,dx$ is finite has a Fourier series expansion:
+    \[ f(x) \sim \frac{a_0}{2} + \sum_{n=1}^{\infty} \left( a_n \cos nx + b_n \sin nx \right) \]
+    \item This Fourier series converges to $f(x)$ in the mean.
+    \item If $f(x)$ is continuously differentiable, its Fourier series converges uniformly.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Fourier series in higher dimensions (vector notation)}
+\begin{itemize}
+
+    \item Consider a function $f(x_1, x_2)$ $(p_1, p_2)$-periodic in variables $x_1$ and $x_2$.
+    \item Assuming $p_1$ and $p_2$ to be 1, the condition is:
+    \[ f(x_1 + n_1, x_2 + n_2) = f(x_1, x_2) \quad \forall x_1, x_2 \in [0, 1] \]
+    \item Using vector notation, $x = (x_1, x_2)$ and $n = (n_1, n_2)$, the condition becomes:
+    \[ f(x+n) = f(x) \quad \forall x \in [0, 1]^2, \, n \in \mathbb{N} \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Fourier series in higher dimensions (vector notation)}
+\begin{itemize}
+
+    \item In 2-D, the building blocks for periodic function $f(x_1, x_2)$ are the product of complex exponentials in one variable.
+    \item The general higher harmonic is of the form:
+    \[ e^{2\pi in_1 x_1} e^{2\pi in_2 x_2} \]
+    \item We can write the Fourier series expansion as:
+    \[ \sum_{n_1, n_2} c_{n_1, n_2} e^{2\pi i (n_1 x_1 + n_2 x_2)} \]
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Fourier series in 2-D }
+\begin{itemize}
+
+    \item Let $f(x, y)$ be a continuously differentiable periodic function with a period of $1$ in both variables.
+    \item For each value of $y$, we can expand $f(x, y)$ in a uniformly convergent Fourier series:
+    \begin{align*}
+    f(x,y) = a_{0}+ \sum b_{m}(2\pi mx)+\sum c_{m}\sin(2\pi mx)\\
+    &\hspace{-17em} +\sum d_{n}\cos\left(2\pi ny\right)+\sum e_{n}\sin\left(2\pi ny\right)\\
+    &\hspace{-17em} +\sum\sum f_{mn}\cos\left(2\pi mx\right)\sin\left(2\pi ny\right)\\
+    &\hspace{-17em} +\sum\sum g_{mn}\cos\left(2\pi mx\right)\cos\left(2\pi ny\right)\\
+    &\hspace{-17em} +\sum\sum h_{mn}\sin\left(2\pi mx\right)\sin\left(2\pi ny\right)\\
+    &\hspace{-17em} +\sum\sum k_{mn}\sin\left(2\pi mx\right)\cos\left(2\pi ny\right)
+    \end{align*}
+    
+\end{itemize}
+\end{frame}
+\begin{frame}{Fourier series in 2-D}
+    
+\end{frame}
+\begin{frame}
+\frametitle{Fourier series in 2-D}
+\begin{itemize}
+     \item Coefficients can be expanded in uniformly convergent Fourier series:
+    \begin{align*}
+    a_n(y) &= \frac{1}{2} a_{n0} + \sum_{m=1}^{\infty} (a_{nm} \cos my + b_{nm} \sin my) \\
+    b_n(y) &= \frac{1}{2} c_{n0} + \sum_{m=1}^{\infty} (c_{nm} \cos my + d_{nm} \sin my)
+    \end{align*}
+    \item Where:
+    \begin{align*}
+    a_{nm} &= \frac{1}{\pi^{2}}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}f(x,y)\cos nx\cos my\,dx\,dy\\
+    b_{nm} &= \frac{1}{\pi^{2}}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}f(x,y)\cos nx\sin my\,dx\,dy \\
+    c_{nm} &= \frac{1}{\pi^{2}}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}f(x,y)\sin nx\cos my\,dx\,dy \\
+    d_{nm} &= \frac{1}{\pi^{2}}\int_{-\pi}^{\pi}\int_{-\pi}^{\pi}f(x,y)\sin nx\sin my\,dx\,dy \\
+    \end{align*}
+\end{itemize}
+\end{frame}
+
+\end{document}
