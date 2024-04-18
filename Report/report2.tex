@@ -55,7 +55,7 @@
     \item Let $f(x, y)$ be a continuously differentiable periodic function with a period of $1$ in both variables.
     \item For each value of $y$, we can expand $f(x, y)$ in a uniformly convergent Fourier series:
     \begin{align*}
-    f(x,y) = a_{0}+ \sum b_{m}(2\pi mx)+\sum c_{m}\sin(2\pi mx)\\
+    f(x,y) = a_{0}+ \sum b_{m}\cos(2\pi mx)+\sum c_{m}\sin(2\pi mx)\\
     &\hspace{-17em} +\sum d_{n}\cos\left(2\pi ny\right)+\sum e_{n}\sin\left(2\pi ny\right)\\
     &\hspace{-17em} +\sum\sum f_{mn}\cos\left(2\pi mx\right)\sin\left(2\pi ny\right)\\
     &\hspace{-17em} +\sum\sum g_{mn}\cos\left(2\pi mx\right)\cos\left(2\pi ny\right)\\
@@ -198,7 +198,7 @@
 \begin{frame}{Double Fourier Series of Sine Triangle PWM}
     \begin{itemize}
         \item \begin{align*}
-            f(f_1t,f_2t) = a_{0}+ \sum b_{m}(2\pi mf_1t)+\sum c_{m}\sin(2\pi mf_1t)\\
+            f(f_1t,f_2t) = a_{0}+ \sum b_{m}\cos(2\pi mf_1t)+\sum c_{m}\sin(2\pi mf_1t)\\
             &\hspace{-17em} +\sum d_{n}\cos\left(2\pi nf_2t\right)+\sum e_{n}\sin\left(2\pi nf_2t\right)\\
             &\hspace{-17em} +\sum_{m}\sum_{n}\sin\left(2\pi\left(nf_{2}+mf_{1}\right)t\right)\left(\frac{f_{mn}}{2}+\frac{k_{mn}}{2}\right)\\
             &\hspace{-17em}+\sum_{m}\sum_{n}\sin\left(2\pi\left(nf_{2}-mf_{1}\right)t\right)\left(\frac{f_{mn}}{2}-\frac{k_{mn}}{2}\right)\\
@@ -210,7 +210,7 @@
 
 \begin{frame}{Double Fourier Series of Sine Triangle PWM}
 \begin{itemize}
-    \item $\sum b_{m}(2\pi mf_1t)+\sum c_{m}\sin(2\pi mf_1t)$ is Harmonics from modulation signal
+    \item $\sum b_{m}\cos(2\pi mf_1t)+\sum c_{m}\sin(2\pi mf_1t)$ is Harmonics from modulation signal
     \item $\sum d_{n}\cos\left(2\pi nf_2t\right)+\sum e_{n}\sin\left(2\pi nf_2t\right)$ is Harmonics from Carrier Signal
     \item $\sum_{m}\sum_{n}\sin\left(2\pi\left(nf_{2}+mf_{1}\right)t\right)\left(\frac{f_{mn}}{2}+\frac{k_{mn}}{2}\right) +\sum_{m}\sum_{n}\sin\left(2\pi\left(nf_{2}-mf_{1}\right)t\right)\left(\frac{f_{mn}}{2}-\frac{k_{mn}}{2}\right)+\sum_{m}\sum_{n}\cos\left(2\pi\left(nf_{2}+mf_{1}\right)t\right)\left(\frac{g_{mn}}{2}-\frac{h_{mn}}{2}\right) +\sum_{m}\sum_{n}\cos\left(2\pi\left(nf_{2}-mf_{1}\right)t\right)\left(\frac{g_{mn}}{2}+\frac{h_{mn}}{2}\right)$ are Sideband Harmonics
 \end{itemize}
